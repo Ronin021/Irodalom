@@ -24,7 +24,7 @@ tableHeader.appendChild(headerSzerelem2); // Hozzáadja a fejléc sorhoz
 
 // Táblázat első sor
 const firstRow = document.createElement('tr'); // Létrehoz egy <tr> sort az első adatsorhoz
-table.appendChild(firstRow); // Hozzáadja a sort a táblázathoz
+table.appendChild(firstRow);  // Hozzáadja a sort a táblázathoz
 
 const firstRowSzerzo = document.createElement('td'); // Létrehoz egy adatcellát (<td>)
 firstRowSzerzo.innerHTML = 'Balassi Bálint'; // Beállítja a cella tartalmát
