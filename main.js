@@ -55,6 +55,9 @@ tableHeader.appendChild(headerSzerelem); // Hozzáadja a cellát a fejléc sorho
 const torzs = document.createElement('tbody'); // <tbody> elem létrehozása
 table.appendChild(torzs); // A táblázat törzsének hozzáfűzése a táblázathoz
 
+
+
+function Rendertorzs(){
 // Ciklus a szerzők adatai alapján
 for (const currentElement of array) { // Végigmegyünk az `array` tömb elemein
     const aktivsor = document.createElement('tr'); // Új sor (<tr>) létrehozása
@@ -83,3 +86,5 @@ for (const currentElement of array) { // Végigmegyünk az `array` tömb elemein
         aktivsor.appendChild(szerelem2Cella); // Cellának hozzáfűzése az aktuális sorhoz
     }
 }
+}
+Rendertorzs()
