@@ -55,86 +55,28 @@ headerSzerelem.innerHTML = array[0].szerelem
 headerSzerelem.colSpan = 2; // A "Szerelmek" cella két oszlopot ölel fel
 tableHeader.appendChild(headerSzerelem); // Hozzáadja a cellát a fejléc sorhoz
 
-// Táblázat első sor
+// Táblázat törzsének létrehozása
+const torzs = document.createElement('tbody'); // <tbody> elem létrehozása
+table.appendChild(torzs); // A táblázat törzsének hozzáfűzése a táblázathoz
 
+// Ciklus a szerzők adatai alapján
+for (const currentElement of array) { // Végigmegyünk a `array` tömb elemein
+    const aktivsor = document.createElement('tr'); // Új sor létrehozása
+    torzs.appendChild(aktivsor); // Sor hozzáfűzése a táblázat törzséhez
 
-const firstRow = document.createElement('tr'); // Létrehoz egy <tr> sort az első adatsorhoz
-table.appendChild(firstRow); // Hozzáadja a sort a táblázathoz
+    const szerzoCella = document.createElement('td'); // Első oszlop cellájának létrehozása
+    szerzoCella.innerHTML = currentElement.szerzo; // Cellatartalom beállítása
+    aktivsor.appendChild(szerzoCella); // Első cella hozzáfűzése az aktuális sorhoz
 
-// Adatcellák hozzáadása az első sorhoz
-const firstRowSzerzo = document.createElement('td'); // Létrehoz egy adatcellát (<td>) az első sorhoz
-firstRowSzerzo.innerHTML = array[1].szerzo
-firstRow.appendChild(firstRowSzerzo); // Hozzáadja a cellát az első sorhoz
+    const korszakCella = document.createElement('td'); // Második oszlop cellájának létrehozása
+    korszakCella.innerHTML = currentElement.korszak; // Cellatartalom beállítása
+    aktivsor.appendChild(korszakCella); // Második cella hozzáfűzése az aktuális sorhoz
 
-const firstRowKorszak = document.createElement('td'); // Létrehoz egy második adatcellát
-firstRowKorszak.innerHTML = array[1].korszak
-firstRow.appendChild(firstRowKorszak); // Hozzáadja a cellát az első sorhoz
+    const szerelem1Cella = document.createElement('td'); // Harmadik oszlop cellájának létrehozása
+    szerelem1Cella.innerHTML = currentElement.szerelem1; // Cellatartalom beállítása
+    aktivsor.appendChild(szerelem1Cella); // Harmadik cella hozzáfűzése az aktuális sorhoz
 
-const firstRowSzerelem1 = document.createElement('td'); // Létrehoz egy harmadik adatcellát
-firstRowSzerelem1.innerHTML = array[1].szerelem1
-firstRow.appendChild(firstRowSzerelem1); // Hozzáadja a cellát az első sorhoz
-
-const firstRowSzerelem2 = document.createElement('td'); // Létrehoz egy negyedik adatcellát
-firstRowSzerelem2.innerHTML =array[1].szerelem2
-firstRow.appendChild(firstRowSzerelem2); // Hozzáadja a cellát az első sorhoz
-
-// Táblázat második sor
-
-
-const secondRow = document.createElement('tr'); // Létrehoz egy <tr> sort a második adatsorhoz
-table.appendChild(secondRow); // Hozzáadja a sort a táblázathoz
-
-// Adatcellák hozzáadása a második sorhoz
-const secondRowSzerzo = document.createElement('td'); // Létrehoz egy adatcellát a második sorhoz
-secondRowSzerzo.innerHTML = array[2].szerzo
-secondRow.appendChild(secondRowSzerzo); // Hozzáadja a cellát a második sorhoz
-
-const secondRowKorszak = document.createElement('td'); // Létrehoz egy második adatcellát
-secondRowKorszak.innerHTML = array[2].korszak
-secondRow.appendChild(secondRowKorszak); // Hozzáadja a cellát a második sorhoz
-
-const secondRowSzerelem1 = document.createElement('td'); // Létrehoz egy harmadik adatcellát
-secondRowSzerelem1.innerHTML = array[2].szerelem1
-secondRowSzerelem1.colSpan = 2; // A "Szerelmek" cella két oszlopot ölel fel
-secondRow.appendChild(secondRowSzerelem1); // Hozzáadja a cellát a második sorhoz
-
-
-
-const thirdRow = document.createElement('tr'); // Létrehoz egy <tr> sort a harmadik adatsorhoz
-table.appendChild(thirdRow); // Hozzáadja a sort a táblázathoz
-
-// Adatcellák hozzáadása a harmadik sorhoz
-const thirdRowSzerzo = document.createElement('td'); // Létrehoz egy adatcellát
-thirdRowSzerzo.innerHTML = array[3].szerzo
-thirdRow.appendChild(thirdRowSzerzo); // Hozzáadja a cellát a harmadik sorhoz
-
-const thirdRowKorszak = document.createElement('td'); // Létrehoz egy második adatcellát
-thirdRowKorszak.innerHTML = array[3].korszak
-thirdRow.appendChild(thirdRowKorszak); // Hozzáadja a cellát a harmadik sorhoz
-
-const thirdRowSzerelem1 = document.createElement('td'); // Létrehoz egy harmadik adatcellát
-thirdRowSzerelem1.innerHTML =array[3].szerelem1
-thirdRow.appendChild(thirdRowSzerelem1); // Hozzáadja a cellát a harmadik sorhoz
-
-const thirdRowSzerelem2 = document.createElement('td'); // Létrehoz egy negyedik adatcellát
-thirdRowSzerelem2.innerHTML = array[3].szerelem2
-thirdRow.appendChild(thirdRowSzerelem2); // Hozzáadja a cellát a harmadik sorhoz
-
-// Táblázat negyedik sor
-const fourthRow = document.createElement('tr'); // Létrehoz egy <tr> sort a negyedik adatsorhoz
-table.appendChild(fourthRow); // Hozzáadja a sort a táblázathoz
-
-// Adatcellák hozzáadása a negyedik sorhoz
-const fourthRowSzerzo = document.createElement('td'); // Létrehoz egy adatcellát
-fourthRowSzerzo.innerHTML = array[4].szerzo; // Beállítja a szerző nevét
-fourthRow.appendChild(fourthRowSzerzo); // Hozzáadja a cellát a negyedik sorhoz
-
-const fourthRowKorszak = document.createElement('td'); // Létrehoz egy második adatcellát
-fourthRowKorszak.innerHTML = array[4].korszak; // Beállítja a korszak nevét
-fourthRow.appendChild(fourthRowKorszak); // Hozzáadja a cellát a negyedik sorhoz
-
-const fourthRowSzerelem1 = document.createElement('td'); // Létrehoz egy harmadik adatcellát
-fourthRowSzerelem1.innerHTML = array[4].szerelem1; // Beállítja az első szerelmet
-fourthRowSzerelem1.colSpan = 2
-fourthRow.appendChild(fourthRowSzerelem1); // Hozzáadja a cellát a negyedik sorhoz
-
+    const szerelem2Cella = document.createElement('td'); // Negyedik oszlop cellájának létrehozása
+    szerelem2Cella.innerHTML = currentElement.szerelem2 || ''; // Cellatartalom beállítása (üres, ha nincs adat)
+    aktivsor.appendChild(szerelem2Cella); // Negyedik cella hozzáfűzése az aktuális sorhoz
+}
