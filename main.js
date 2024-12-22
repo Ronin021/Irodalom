@@ -1,26 +1,26 @@
 // Adatok tömbje, minden sor egy objektumként
 const array = [
     {
-        szerzo: 'Balassi Bálint',
-        korszak: 'reformáció',
-        szerelem1: 'Losonczy Anna',
-        szerelem2: 'Dobó Krisztina',
+        szerzo: 'Balassi Bálint', // Az első szerző neve
+        korszak: 'reformáció', // A korszak, amelyhez a szerző tartozik
+        szerelem1: 'Losonczy Anna', // Az első szerelem neve
+        szerelem2: 'Dobó Krisztina', // A második szerelem neve (opcionális)
     },
     {
-        szerzo: 'Csokonai Vitéz Mihály',
-        korszak: 'felvilágosodás',
-        szerelem1: 'Vajda Juliána',
+        szerzo: 'Csokonai Vitéz Mihály', // Második szerző neve
+        korszak: 'felvilágosodás', // Második szerző korszakának neve
+        szerelem1: 'Vajda Juliána', // Második szerző első szerelme
     },
     {
-        szerzo: 'Petőfi Sándor',
-        korszak: 'magyar romantika',
-        szerelem1: 'Mednyánszky Berta',
-        szerelem2: 'Szendrey Júlia',
+        szerzo: 'Petőfi Sándor', // Harmadik szerző neve
+        korszak: 'magyar romantika', // Harmadik szerző korszakának neve
+        szerelem1: 'Mednyánszky Berta', // Harmadik szerző első szerelme
+        szerelem2: 'Szendrey Júlia', // Harmadik szerző második szerelme
     },
     {
-        szerzo: 'Ady Endre',
-        korszak: '20. század',
-        szerelem1: 'Léda',
+        szerzo: 'Ady Endre', // Negyedik szerző neve
+        korszak: '20. század', // Negyedik szerző korszakának neve
+        szerelem1: 'Léda', // Negyedik szerző első szerelme
     },
 ];
 
@@ -91,33 +91,54 @@ function Rendertorzs() {
 document.getElementById('form').addEventListener('submit', function (e) {
     e.preventDefault(); // Alapértelmezett form viselkedésének megakadályozása (pl. oldal újratöltése)
 
-    // Szerző mező értékének lekérése
-    const szerzoHTMLelement = document.getElementById('kolto_nev'); // Input mező kiválasztása ID alapján
-    const szerzoValue = szerzoHTMLelement.value; // Input mező értékének lekérése
+    const ThisForm = e.currentTarget; // Az éppen aktuális form elem, amelyre az esemény vonatkozik
+    const errorElement = ThisForm.querySelectorAll('.error'); // Kiválasztjuk az összes hibaüzenet megjelenítésére szolgáló elemet
 
-    // Korszak mező értékének lekérése
-    const korszakHTMLelement = document.getElementById('korszak'); // Input mező kiválasztása ID alapján
-    const korszakValue = korszakHTMLelement.value; // Input mező értékének lekérése
+    for (const errorok of errorElement) {
+        errorok.innerHTML = ''; // Az összes hibaüzenet tartalmát töröljük
+    }
 
-    // Első szerelem mező értékének lekérése
-    const szerelem1HTMLelement = document.getElementById('szerelem1'); // Input mező kiválasztása ID alapján
-    const szerelem1Value = szerelem1HTMLelement.value; // Input mező értékének lekérése
+    let validation = true; // Az űrlap érvényességét jelző változó
 
-    // Második szerelem mező értékének lekérése
-    const szerelem2HTMLelement = document.getElementById('szerelem2'); // Input mező kiválasztása ID alapján
-    const szerelem2Value = szerelem2HTMLelement.value; // Input mező értékének lekérése
+    // Szerző, korszak, szerelem mezők értékeinek lekérése
+    const szerzoValue = document.getElementById('kolto_nev').value;
+    const korszakValue = document.getElementById('korszak').value;
+    const szerelem1Value = document.getElementById('szerelem1').value;
+    const szerelem2Value = document.getElementById('szerelem2').value;
 
-    // Új objektum létrehozása az űrlap mezőinek értékeiből
-    const newSzerzo = {
-        szerzo: szerzoValue, // Szerző értékének hozzárendelése
-        korszak: korszakValue, // Korszak értékének hozzárendelése
-        szerelem1: szerelem1Value, // Első szerelem értékének hozzárendelése
-        szerelem2: szerelem2Value === '' ? undefined : szerelem2Value, // Második szerelem csak akkor, ha nem üres
-    };
+    // Érvényesség ellenőrzés
+    if (szerzoValue === '') {
+        const parent = document.getElementById('kolto_nev').parentElement;
+        const place_of_error = parent.querySelector('.error');
+        place_of_error.innerHTML = 'A név megadása kötelező'; // Hibaüzenet, ha a szerző neve nincs kitöltve
+        validation = false; // Az űrlap nem érvényes
+    }
+    if (korszakValue === '') {
+        const parent = document.getElementById('korszak').parentElement;
+        const place_of_error = parent.querySelector('.error');
+        place_of_error.innerHTML = 'A korszak megadása kötelező'; // Hibaüzenet, ha a korszak nincs kitöltve
+        validation = false; // Az űrlap nem érvényes
+    }
+    if (szerelem1Value === '') {
+        const parent = document.getElementById('szerelem1').parentElement;
+        const place_of_error = parent.querySelector('.error');
+        place_of_error.innerHTML = 'Az első szerelem megadása kötelező'; // Hibaüzenet, ha az első szerelem nincs kitöltve
+        validation = false; // Az űrlap nem érvényes
+    }
 
-    array.push(newSzerzo); // Új objektum hozzáadása az array tömbhöz
-    torzs.innerHTML = ''; // A táblázat törzs (tbody) tartalmának törlése
-    Rendertorzs(); // A táblázat újrarenderelése a frissített adatokkal
+    // Ha az űrlap érvényes, feldolgozzuk az adatokat
+    if (validation) {
+        const newSzerzo = {
+            szerzo: szerzoValue, // Az új szerző neve
+            korszak: korszakValue, // Az új korszak neve
+            szerelem1: szerelem1Value, // Az új első szerelem neve
+            szerelem2: szerelem2Value || undefined, // Az új második szerelem neve, ha van
+        };
+
+        array.push(newSzerzo); // Új objektum hozzáadása az array tömbhöz
+        torzs.innerHTML = ''; // A táblázat törzs (tbody) tartalmának törlése
+        Rendertorzs(); // A táblázat újrarenderelése a frissített adatokkal
+    }
 });
 
 // A táblázat kezdeti megjelenítése
