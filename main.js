@@ -62,15 +62,18 @@ function Rendertorzs() {
         const aktivsor = document.createElement('tr'); // Új sor (<tr>) létrehozása
         torzs.appendChild(aktivsor); // Sor hozzáfűzése a táblázat törzséhez
 
-        const szerzoCella = document.createElement('td'); // Első oszlop cellájának (<td>) létrehozása
+        // Első oszlop cellája (szerző)
+        const szerzoCella = document.createElement('td'); 
         szerzoCella.innerHTML = currentElement.szerzo; // Cellatartalom beállítása a szerző nevével
         aktivsor.appendChild(szerzoCella); // Első cella hozzáfűzése az aktuális sorhoz
 
-        const korszakCella = document.createElement('td'); // Második oszlop cellájának (<td>) létrehozása
+        // Második oszlop cellája (korszak)
+        const korszakCella = document.createElement('td');
         korszakCella.innerHTML = currentElement.korszak; // Cellatartalom beállítása a korszak nevével
         aktivsor.appendChild(korszakCella); // Második cella hozzáfűzése az aktuális sorhoz
 
-        const szerelemCella = document.createElement('td'); // Harmadik oszlop cellájának (<td>) létrehozása
+        // Harmadik oszlop cellája (szerelem1)
+        const szerelemCella = document.createElement('td');
         szerelemCella.innerHTML = currentElement.szerelem1; // Cellatartalom beállítása az első szerelem nevével
         if (currentElement.szerelem2 === undefined) {
             // Ha nincs második szerelem, a cella két oszlopot foglal el
@@ -80,7 +83,7 @@ function Rendertorzs() {
 
         if (currentElement.szerelem2 !== undefined) {
             // Ha van második szerelem, új cella készül
-            const szerelem2Cella = document.createElement('td'); // Új cella (<td>) a második szerelemhez
+            const szerelem2Cella = document.createElement('td');
             szerelem2Cella.innerHTML = currentElement.szerelem2; // Cellatartalom beállítása a második szerelem nevével
             aktivsor.appendChild(szerelem2Cella); // Cellának hozzáfűzése az aktuális sorhoz
         }
@@ -129,17 +132,18 @@ document.getElementById('form').addEventListener('submit', function (e) {
     // Ha az űrlap érvényes, feldolgozzuk az adatokat
     if (validation) {
         const newSzerzo = {
-            szerzo: szerzoValue, // Az új szerző neve
-            korszak: korszakValue, // Az új korszak neve
-            szerelem1: szerelem1Value, // Az új első szerelem neve
-            szerelem2: szerelem2Value || undefined, // Az új második szerelem neve, ha van
+            szerzo: szerzoValue,
+            korszak: korszakValue,
+            szerelem1: szerelem1Value,
+            szerelem2: szerelem2Value,
         };
 
-        array.push(newSzerzo); // Új objektum hozzáadása az array tömbhöz
-        torzs.innerHTML = ''; // A táblázat törzs (tbody) tartalmának törlése
-        Rendertorzs(); // A táblázat újrarenderelése a frissített adatokkal
+        array.push(newSzerzo); // Az új szerzőt hozzáadjuk az array-hoz
+        torzs.innerHTML = '';  // A táblázat törzsének ürítése
+
+        Rendertorzs(); // A táblázat újrarenderelése a friss adatokkal
     }
 });
 
-// A táblázat kezdeti megjelenítése
+// Az első renderelés
 Rendertorzs();
