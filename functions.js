@@ -1,61 +1,58 @@
 // Adatok tömbje, amely tartalmazza a költők adatait (szerző, korszak, szerelmek)
 const array = [
-    { szerzo: 'Balassi Bálint', 
-        korszak: 'reformáció', 
-        szerelem1: 'Losonczy Anna', 
-        szerelem2: 'Dobó Krisztina' },
-
-    { szerzo: 'Csokonai Vitéz Mihály', 
-        korszak: 'felvilágosodás', 
-        szerelem1: 'Vajda Juliána' },
-    { szerzo: 'Petőfi Sándor', 
-        korszak: 'magyar romantika', 
-        szerelem1: 'Mednyánszky Berta', 
-        szerelem2: 'Szendrey Júlia' },
-    { szerzo: 'Ady Endre', 
-        korszak: '20. század', 
-        szerelem1: 'Léda' },
+    { szerzo: 'Balassi Bálint', korszak: 'reformáció', szerelem1: 'Losonczy Anna', szerelem2: 'Dobó Krisztina' },
+    { szerzo: 'Csokonai Vitéz Mihály', korszak: 'felvilágosodás', szerelem1: 'Vajda Juliána' },
+    { szerzo: 'Petőfi Sándor', korszak: 'magyar romantika', szerelem1: 'Mednyánszky Berta', szerelem2: 'Szendrey Júlia' },
+    { szerzo: 'Ady Endre', korszak: '20. század', szerelem1: 'Léda' },
 ];
 
 // Fejléc objektum, ami a táblázat oszlopainak nevét tárolja
 const fejlecobjekt = {
-    szerzo: 'Szerző neve', // Az első oszlop neve
-    korszak: 'Korszak', // A második oszlop neve
-    szerelem: 'Szerelmek', // A harmadik oszlop neve
+    szerzo: 'Szerző neve',
+    korszak: 'Korszak',
+    szerelem: 'Szerelmek',
 };
 
-
+/**
+ * 
+ * @param {*} id - A mező azonosítója, amely az input és a címke elemhez is társítva lesz
+ * @param {*} labelText - A mezőhöz tartozó címke szövege
+ * @param {*} type - A mező típusa, alapértelmezés szerint 'text' (pl. 'text', 'checkbox', stb.)
+ * @returns - Visszaad egy div elemet, amely tartalmazza az input mezőt, a címkét és a hibaüzenet helyét
+ */
 // Általános függvény mezők létrehozására az ismétlődő kód elkerülésére
 function createField(id, labelText, type = 'text') {
-    const div = document.createElement('div'); // Létrehozunk egy div-et az adott mezőhöz
-    div.classList.add('field'); // A divhez hozzárendeljük a "field" osztályt
+    const div = document.createElement('div');
+    div.classList.add('field'); // Div konténer a mezőnek
 
-    const label = document.createElement('label'); // Létrehozunk egy címkét (label)
-    label.htmlFor = id; // Címke kapcsolása a mezőhöz
-    label.innerText = labelText; // Címkéhez megadjuk a szöveget
+    const label = document.createElement('label');
+    label.htmlFor = id; // Label összekötése a mezővel
+    label.innerText = labelText; // Label szövegének beállítása
 
-    const input = document.createElement('input'); // Létrehozunk egy input mezőt
-    input.type = type; // Beállítjuk a mező típusát
-    input.id = id; // Azonosító beállítása
-    input.name = id; // Név beállítása
+    const input = document.createElement('input');
+    input.type = type; // Mező típusa (szöveg vagy checkbox)
+    input.id = id;
+    input.name = id;
 
-    div.appendChild(label); // A címke hozzáadása a div-hez
-    div.appendChild(input); // A mező hozzáadása a div-hez
+    div.appendChild(label); // Label hozzáadása a divhez
+    div.appendChild(input); // Input mező hozzáadása a divhez
 
-    const errorDiv = document.createElement('div'); // Hibaüzenetekhez div
-    errorDiv.classList.add('error'); // Hozzáadjuk az "error" osztályt
-    div.appendChild(errorDiv); // Hiba div hozzáadása
+    const errorDiv = document.createElement('div');
+    errorDiv.classList.add('error'); // Hibamező létrehozása
+    div.appendChild(errorDiv); // Hibamező hozzáadása a divhez
 
-    return div; // Visszaadjuk az elkészült mezőt
+    return div;
 }
 
-
+/**
+ * 
+ */
 // Űrlap generálása az általános függvénnyel
 function formGenerate() {
-    const form = document.createElement('form'); // Űrlap létrehozása
-    form.id = 'form'; // Azonosító beállítása
+    const form = document.createElement('form');
+    form.id = 'form'; // Form azonosító beállítása
 
-    // Mezők létrehozása és hozzáadása
+    // Mezők létrehozása és hozzáadása az űrlaphoz
     const fields = [
         createField('kolto_nev', 'Költő neve:'),
         createField('korszak', 'Korszak:'),
@@ -66,93 +63,92 @@ function formGenerate() {
 
     fields.forEach(field => form.appendChild(field)); // Mezők hozzáadása az űrlaphoz
 
-    const gomb = document.createElement('button'); // Beküldés gomb
-    gomb.type = 'submit'; // Gomb típusa
-    gomb.innerText = 'Hozzáadás'; // Gomb szövege
-    form.appendChild(gomb); // Gomb hozzáadása
+    const gomb = document.createElement('button');
+    gomb.type = 'submit'; // Gomb típusa: küldés
+    gomb.innerText = 'Hozzáadás'; // Gomb felirata
+    form.appendChild(gomb); // Gomb hozzáadása az űrlaphoz
 
-    document.body.appendChild(form); // Az űrlap hozzáadása a dokumentumhoz
+    document.body.appendChild(form); // Űrlap hozzáadása az oldalhoz
 }
 
-// Funkció a táblázat törzsének renderelésére
+/**
+ * 
+ */
+// Táblázat törzs renderelése
 function Rendertorzs() {
-    torzs.innerHTML = ''; // A táblázat törzsének kiürítése a duplikációk elkerülése érdekében
-    // Az adatok tömbjén végighaladva létrehozzuk a táblázat sorait
+    torzs.innerHTML = ''; // Táblázat törzs kiürítése
     for (const currentElement of array) {
-        const aktivsor = document.createElement('tr'); // Új sor létrehozása
-        torzs.appendChild(aktivsor); // Az új sort hozzáadjuk a táblázat törzséhez
+        const aktivsor = document.createElement('tr');
+        torzs.appendChild(aktivsor); // Új sor hozzáadása a törzshöz
 
-        // Szerző cella létrehozása és hozzáadása
-        const szerzoCella = document.createElement('td'); // Új cella létrehozása a szerzőnek
-        szerzoCella.innerHTML = currentElement.szerzo; // A cellába beírjuk a költő nevét
-        aktivsor.appendChild(szerzoCella); // A cella hozzáadása a sorhoz
+        const szerzoCella = document.createElement('td');
+        szerzoCella.innerHTML = currentElement.szerzo; // Szerző beállítása
+        aktivsor.appendChild(szerzoCella); // Cella hozzáadása a sorhoz
 
-        // Korszak cella létrehozása és hozzáadása
-        const korszakCella = document.createElement('td'); // Új cella létrehozása a korszaknak
-        korszakCella.innerHTML = currentElement.korszak; // A cellába beírjuk a korszakot
-        aktivsor.appendChild(korszakCella); // A cella hozzáadása a sorhoz
+        const korszakCella = document.createElement('td');
+        korszakCella.innerHTML = currentElement.korszak; // Korszak beállítása
+        aktivsor.appendChild(korszakCella); // Cella hozzáadása a sorhoz
 
-        // Szerelem cella létrehozása (első szerelem)
-        const szerelemCella = document.createElement('td'); // Új cella létrehozása az első szerelemnek
-        szerelemCella.innerHTML = currentElement.szerelem1; // A cellába beírjuk az első szerelmet
+        const szerelemCella = document.createElement('td');
+        szerelemCella.innerHTML = currentElement.szerelem1; // Első szerelem beállítása
 
-        // Ha nincs második szerelem, a cella szélességét kétszeresre állítjuk
         if (currentElement.szerelem2 === undefined) {
-            szerelemCella.colSpan = 2; // A második szerelem celláját kihagyjuk, ha nincs
+            szerelemCella.colSpan = 2; // Oszlop összevonása, ha nincs második szerelem
         }
-        aktivsor.appendChild(szerelemCella); // A szerelem cella hozzáadása a sorhoz
+        aktivsor.appendChild(szerelemCella); // Cella hozzáadása a sorhoz
 
-        // Ha van második szerelem, új cellát hozunk létre és hozzáadjuk
         if (currentElement.szerelem2 !== undefined) {
-            const szerelem2Cella = document.createElement('td'); // Új cella a második szerelemnek
-            szerelem2Cella.innerHTML = currentElement.szerelem2; // A cellába beírjuk a második szerelmet
-            aktivsor.appendChild(szerelem2Cella); // A második szerelem cellájának hozzáadása
+            const szerelem2Cella = document.createElement('td');
+            szerelem2Cella.innerHTML = currentElement.szerelem2; // Második szerelem beállítása
+            aktivsor.appendChild(szerelem2Cella); // Cella hozzáadása a sorhoz
         }
     }
 }
-
+/**
+ * 
+ * @param {string} fieldId - Az űrlap mezőjének azonosítója (ID), amelyhez a hibaüzenetet rendelhetjük.
+ * @param {string} errorMessage - A megjelenítendő hibaüzenet szövege.
+ */
+// Általános függvény a hibaüzenetek beállítására
+function setError(fieldId, errorMessage) {
+    const parent = document.getElementById(fieldId).parentElement; // Mező szülője
+    const errorElement = parent.querySelector('.error'); // Hibamező kiválasztása
+    errorElement.innerHTML = errorMessage; // Hibaüzenet beállítása
+}
+/**
+ * 
+ * @returns {boolean} - A validációs eredmény: igaz, ha az űrlap érvényes, hamis, ha nem.
+ */
 // Validációs függvény az űrlap mezőinek ellenőrzésére
 function validateForm() {
-    let validation = true; // A validációs változó alapértelmezett értéke igaz
+    let validation = true; // Kezdetben érvényes az űrlap
 
-    // Az input mezők értékeinek lekérése
-    const szerzoValue = document.getElementById('kolto_nev').value; // Költő neve
-    const korszakValue = document.getElementById('korszak').value; // Korszak
-    const szerelem1Value = document.getElementById('szerelem1').value; // Első szerelem
-    const szerelem2Value = document.getElementById('szerelem2').value; // Második szerelem
-    const checkboxChecked = document.getElementById('masodik').checked; // Checkbox értéke, hogy van-e második szerelem
+    const szerzoValue = document.getElementById('kolto_nev').value;
+    const korszakValue = document.getElementById('korszak').value;
+    const szerelem1Value = document.getElementById('szerelem1').value;
+    const szerelem2Value = document.getElementById('szerelem2').value;
+    const checkboxChecked = document.getElementById('masodik').checked;
 
-    // Hibák törlése előzőleg
-    const errorElement = document.querySelectorAll('.error'); // Az összes hibaüzenet keresése
-    for (const errorok of errorElement) {
-        errorok.innerHTML = ''; // A hibák eltüntetése
-    }
+    // Hibák törlése az ellenőrzés elején
+    document.querySelectorAll('.error').forEach(error => (error.innerHTML = ''));
 
-    // Validációs ellenőrzések az űrlap mezőkön
+    // Mezők validációja
     if (szerzoValue === '') {
-        const parent = document.getElementById('kolto_nev').parentElement; // A költő név mező szülő elemének keresése
-        const place_of_error = parent.querySelector('.error'); // Hibajelzés helyének keresése
-        place_of_error.innerHTML = 'A név megadása kötelező'; // Hibajelzés, ha a név üres
-        validation = false; // A validáció hamisra állítása
+        setError('kolto_nev', 'A név megadása kötelező');
+        validation = false;
     }
     if (korszakValue === '') {
-        const parent = document.getElementById('korszak').parentElement; // A korszak mező szülő elemének keresése
-        const place_of_error = parent.querySelector('.error'); // Hibajelzés helyének keresése
-        place_of_error.innerHTML = 'A korszak megadása kötelező'; // Hibajelzés, ha a korszak üres
-        validation = false; // A validáció hamisra állítása
+        setError('korszak', 'A korszak megadása kötelező');
+        validation = false;
     }
     if (szerelem1Value === '') {
-        const parent = document.getElementById('szerelem1').parentElement; // Az első szerelem mező szülő elemének keresése
-        const place_of_error = parent.querySelector('.error'); // Hibajelzés helyének keresése
-        place_of_error.innerHTML = 'Az első szerelem megadása kötelező'; // Hibajelzés, ha az első szerelem üres
-        validation = false; // A validáció hamisra állítása
+        setError('szerelem1', 'Az első szerelem megadása kötelező');
+        validation = false;
     }
     if (checkboxChecked && szerelem2Value === '') {
-        const parent = document.getElementById('szerelem2').parentElement; // A második szerelem mező szülő elemének keresése
-        const place_of_error = parent.querySelector('.error'); // Hibajelzés helyének keresése
-        place_of_error.innerHTML = 'A költőnek kötelező megadni a szerelmeit'; // Hibajelzés, ha a második szerelem üres és a checkbox be van pipálva
-        validation = false; // A validáció hamisra állítása
+        setError('szerelem2', 'A költőnek kötelező megadni a szerelmeit');
+        validation = false;
     }
 
-    return validation; // Visszaadja, hogy az űrlap érvényes-e
+    return validation; // Visszatérés az érvényességgel
 }
