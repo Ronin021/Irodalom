@@ -44,6 +44,101 @@ for (const fejlecSzoveg of [fejlecobjekt.szerzo, fejlecobjekt.korszak, fejlecobj
 const torzs = document.createElement('tbody'); // Új táblázat törzs létrehozása
 table.appendChild(torzs); // Táblázat törzsének hozzáadása a táblázathoz
 
+
+// Form generálása
+function formGenerate() {
+    const form = document.createElement('form');
+    form.id = 'form';
+
+    const div1 = document.createElement('div');
+    div1.classList.add('field');
+    const label1 = document.createElement('label');
+    label1.htmlFor = 'kolto_nev';
+    label1.innerHTML = 'Költő neve:';
+    const bemenet1 = document.createElement('input');
+    bemenet1.type = 'text';
+    bemenet1.id = 'kolto_nev';
+    bemenet1.name = 'kolto_nev';
+    div1.appendChild(label1);
+    div1.appendChild(bemenet1);
+    const div1error = document.createElement('div');
+    div1error.classList.add('error');
+    div1.appendChild(div1error);
+
+    const div2 = document.createElement('div');
+    div2.classList.add('field');
+    const label2 = document.createElement('label');
+    label2.htmlFor = 'korszak';
+    label2.innerText = 'Korszak:';
+    const bemenet2 = document.createElement('input');
+    bemenet2.type = 'text';
+    bemenet2.id = 'korszak';
+    bemenet2.name = 'korszak';
+    div2.appendChild(label2);
+    div2.appendChild(bemenet2);
+    const div2error = document.createElement('div');
+    div2error.classList.add('error');
+    div2.appendChild(div2error);
+
+    const div3 = document.createElement('div');
+    div3.classList.add('field');
+    const label3 = document.createElement('label');
+    label3.htmlFor = 'szerelem1';
+    label3.innerText = 'Szerelmek:';
+    const bemenet3 = document.createElement('input');
+    bemenet3.type = 'text';
+    bemenet3.id = 'szerelem1';
+    bemenet3.name = 'szerelem1';
+    div3.appendChild(label3);
+    div3.appendChild(bemenet3);
+    const div3error = document.createElement('div');
+    div3error.classList.add('error');
+    div3.appendChild(div3error);
+
+    const div4 = document.createElement('div');
+    div4.classList.add('field');
+    const label4 = document.createElement('label');
+    label4.htmlFor = 'masodik';
+    label4.innerText = 'Volt másik szerelme?';
+    const bemenet4 = document.createElement('input');
+    bemenet4.type = 'checkbox';
+    bemenet4.id = 'masodik';
+    bemenet4.name = 'masodik';
+    div4.appendChild(label4);
+    div4.appendChild(bemenet4);
+    const div4error = document.createElement('div');
+    div4error.classList.add('error');
+    div4.appendChild(div4error);
+
+    const div5 = document.createElement('div');
+    div5.classList.add('field');
+    const label5 = document.createElement('label');
+    label5.htmlFor = 'szerelem2';
+    label5.innerText = 'Második Szerelem neve:';
+    const bemenet5 = document.createElement('input');
+    bemenet5.type = 'text';
+    bemenet5.id = 'szerelem2';
+    bemenet5.name = 'szerelem2';
+    div5.appendChild(label5);
+    div5.appendChild(bemenet5);
+    const div5error = document.createElement('div');
+    div5error.classList.add('error');
+    div5.appendChild(div5error);
+
+    const gombe = document.createElement('button');
+    gombe.type = 'submit';
+    gombe.innerText = 'Hozzáadás';
+
+    form.appendChild(div1);
+    form.appendChild(div2);
+    form.appendChild(div3);
+    form.appendChild(div4);
+    form.appendChild(div5);
+    form.appendChild(gombe);
+    document.body.appendChild(form);
+}
+
+formGenerate();
 // Funkció a táblázat törzsének renderelésére
 function Rendertorzs() {
     torzs.innerHTML = ''; // A táblázat törzsének kiürítése a duplikációk elkerülése érdekében
