@@ -86,19 +86,9 @@ function Rendertorzs() {
     }
 }
 
-// Submit esemény figyelése az űrlapon
-document.getElementById('form').addEventListener('submit', function (e) {
-    e.preventDefault(); // Az alapértelmezett form submit viselkedés letiltása
-
-    const ThisForm = e.currentTarget; // A jelenlegi űrlap elem
-    const errorElement = ThisForm.querySelectorAll('.error'); // Hibák listája
-
-    // Hibaüzenetek törlése az űrlap elküldése előtt
-    for (const errorok of errorElement) {
-        errorok.innerHTML = ''; // Hibák törlése minden mezőből
-    }
-
-    let validation = true; // Az űrlap validációs állapotának nyomon követése
+// Validációs függvény az űrlap mezőinek ellenőrzésére
+function validateForm() {
+    let validation = true;
 
     // Az input mezők értékeinek lekérése
     const szerzoValue = document.getElementById('kolto_nev').value; // Költő neve
@@ -107,12 +97,18 @@ document.getElementById('form').addEventListener('submit', function (e) {
     const szerelem2Value = document.getElementById('szerelem2').value; // Második szerelem
     const checkboxChecked = document.getElementById('masodik').checked; // Checkbox értéke, hogy van-e második szerelem
 
+    // Hibák törlése előzőleg
+    const errorElement = document.querySelectorAll('.error');
+    for (const errorok of errorElement) {
+        errorok.innerHTML = '';
+    }
+
     // Validációs ellenőrzések az űrlap mezőkön
     if (szerzoValue === '') {
         const parent = document.getElementById('kolto_nev').parentElement;
         const place_of_error = parent.querySelector('.error');
         place_of_error.innerHTML = 'A név megadása kötelező'; // Hibajelzés, ha a név üres
-        validation = false; // Ha van hiba, a validáció hamis
+        validation = false;
     }
     if (korszakValue === '') {
         const parent = document.getElementById('korszak').parentElement;
@@ -133,8 +129,23 @@ document.getElementById('form').addEventListener('submit', function (e) {
         validation = false;
     }
 
+    return validation; // Visszaadja, hogy az űrlap érvényes-e
+}
+
+// Submit esemény figyelése az űrlapon
+document.getElementById('form').addEventListener('submit', function (e) {
+    e.preventDefault(); // Az alapértelmezett form submit viselkedés letiltása
+
+    // Összetett validáció meghívása
+    const isValid = validateForm();
+
     // Ha az űrlap érvényes, új adat hozzáadása a tömbhöz
-    if (validation) {
+    if (isValid) {
+        const szerzoValue = document.getElementById('kolto_nev').value; // Költő neve
+        const korszakValue = document.getElementById('korszak').value; // Korszak
+        const szerelem1Value = document.getElementById('szerelem1').value; // Első szerelem
+        const szerelem2Value = document.getElementById('szerelem2').value; // Második szerelem
+
         const newSzerzo = {
             szerzo: szerzoValue, // Szerző neve
             korszak: korszakValue, // Korszak
