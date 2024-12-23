@@ -1,5 +1,4 @@
 
-
 // Létrehozzuk a táblázatot
 const table = document.createElement('table'); // Új táblázat létrehozása
 document.body.appendChild(table); // A táblázat hozzáadása a body elemhez
@@ -28,28 +27,30 @@ formGenerate(); // Űrlap megjelenítése
 
 // Submit esemény figyelése az űrlapon
 document.getElementById('form').addEventListener('submit', function (e) {
-    e.preventDefault(); // Alapértelmezett viselkedés megakadályozása
+    e.preventDefault(); // Az alapértelmezett form submit viselkedés letiltása
 
-    const isValid = validateForm(); // Validáció meghívása
+    // Összetett validáció meghívása
+    const isValid = validateForm();
 
+    // Ha az űrlap érvényes, új adat hozzáadása a tömbhöz
     if (isValid) {
-        // Új költő adatok lekérése az űrlapból
-        const szerzoValue = document.getElementById('kolto_nev').value;
-        const korszakValue = document.getElementById('korszak').value;
-        const szerelem1Value = document.getElementById('szerelem1').value;
-        const szerelem2Value = document.getElementById('szerelem2').value;
+        const szerzoValue = document.getElementById('kolto_nev').value; // Költő neve
+        const korszakValue = document.getElementById('korszak').value; // Korszak
+        const szerelem1Value = document.getElementById('szerelem1').value; // Első szerelem
+        const szerelem2Value = document.getElementById('szerelem2').value; // Második szerelem
 
         const newSzerzo = {
-            szerzo: szerzoValue,
-            korszak: korszakValue,
-            szerelem1: szerelem1Value,
-            szerelem2: szerelem2Value || undefined, // Ha nincs második szerelem, undefined lesz
+            szerzo: szerzoValue, // Szerző neve
+            korszak: korszakValue, // Korszak
+            szerelem1: szerelem1Value, // Első szerelem
+            szerelem2: szerelem2Value || undefined, // Ha nincs második szerelem, undefined értéket adunk
         };
 
         array.push(newSzerzo); // Új költő hozzáadása az adatokhoz
-        torzs.innerHTML = ''; // Táblázat törzs kiürítése
-        Rendertorzs(array); // Táblázat újrarenderelése
+        torzs.innerHTML = '';  // A táblázat törzsének ürítése
+        Rendertorzs(); // A táblázat újrarenderelése
     }
 });
 
-Rendertorzs(array); // Táblázat kezdeti renderelése
+// Az első renderelés végrehajtása, amikor a script először betöltődik
+Rendertorzs(); // Táblázat először történő megjelenítése

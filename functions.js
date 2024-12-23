@@ -24,6 +24,7 @@ const fejlecobjekt = {
     szerelem: 'Szerelmek', // A harmadik oszlop neve
 };
 
+
 // Általános függvény mezők létrehozására az ismétlődő kód elkerülésére
 function createField(id, labelText, type = 'text') {
     const div = document.createElement('div'); // Létrehozunk egy div-et az adott mezőhöz
@@ -74,7 +75,7 @@ function formGenerate() {
 }
 
 // Funkció a táblázat törzsének renderelésére
-function Rendertorzs(array) {
+function Rendertorzs() {
     torzs.innerHTML = ''; // A táblázat törzsének kiürítése a duplikációk elkerülése érdekében
     // Az adatok tömbjén végighaladva létrehozzuk a táblázat sorait
     for (const currentElement of array) {
@@ -109,43 +110,49 @@ function Rendertorzs(array) {
         }
     }
 }
-// Általános függvény a hibaüzenetek beállítására
-function setError(fieldId, errorMessage) {
-    const parent = document.getElementById(fieldId).parentElement; // Mező szülője
-    const errorElement = parent.querySelector('.error'); // Hibamező kiválasztása
-    errorElement.innerHTML = errorMessage; // Hibaüzenet beállítása
-}
 
 // Validációs függvény az űrlap mezőinek ellenőrzésére
 function validateForm() {
-    let validation = true; // Kezdetben érvényes az űrlap
+    let validation = true; // A validációs változó alapértelmezett értéke igaz
 
-    const szerzoValue = document.getElementById('kolto_nev').value;
-    const korszakValue = document.getElementById('korszak').value;
-    const szerelem1Value = document.getElementById('szerelem1').value;
-    const szerelem2Value = document.getElementById('szerelem2').value;
-    const checkboxChecked = document.getElementById('masodik').checked;
+    // Az input mezők értékeinek lekérése
+    const szerzoValue = document.getElementById('kolto_nev').value; // Költő neve
+    const korszakValue = document.getElementById('korszak').value; // Korszak
+    const szerelem1Value = document.getElementById('szerelem1').value; // Első szerelem
+    const szerelem2Value = document.getElementById('szerelem2').value; // Második szerelem
+    const checkboxChecked = document.getElementById('masodik').checked; // Checkbox értéke, hogy van-e második szerelem
 
-    // Hibák törlése az ellenőrzés elején
-    document.querySelectorAll('.error').forEach(error => (error.innerHTML = ''));
+    // Hibák törlése előzőleg
+    const errorElement = document.querySelectorAll('.error'); // Az összes hibaüzenet keresése
+    for (const errorok of errorElement) {
+        errorok.innerHTML = ''; // A hibák eltüntetése
+    }
 
-    // Mezők validációja
+    // Validációs ellenőrzések az űrlap mezőkön
     if (szerzoValue === '') {
-        setError('kolto_nev', 'A név megadása kötelező');
-        validation = false;
+        const parent = document.getElementById('kolto_nev').parentElement; // A költő név mező szülő elemének keresése
+        const place_of_error = parent.querySelector('.error'); // Hibajelzés helyének keresése
+        place_of_error.innerHTML = 'A név megadása kötelező'; // Hibajelzés, ha a név üres
+        validation = false; // A validáció hamisra állítása
     }
     if (korszakValue === '') {
-        setError('korszak', 'A korszak megadása kötelező');
-        validation = false;
+        const parent = document.getElementById('korszak').parentElement; // A korszak mező szülő elemének keresése
+        const place_of_error = parent.querySelector('.error'); // Hibajelzés helyének keresése
+        place_of_error.innerHTML = 'A korszak megadása kötelező'; // Hibajelzés, ha a korszak üres
+        validation = false; // A validáció hamisra állítása
     }
     if (szerelem1Value === '') {
-        setError('szerelem1', 'Az első szerelem megadása kötelező');
-        validation = false;
+        const parent = document.getElementById('szerelem1').parentElement; // Az első szerelem mező szülő elemének keresése
+        const place_of_error = parent.querySelector('.error'); // Hibajelzés helyének keresése
+        place_of_error.innerHTML = 'Az első szerelem megadása kötelező'; // Hibajelzés, ha az első szerelem üres
+        validation = false; // A validáció hamisra állítása
     }
     if (checkboxChecked && szerelem2Value === '') {
-        setError('szerelem2', 'A költőnek kötelező megadni a szerelmeit');
-        validation = false;
+        const parent = document.getElementById('szerelem2').parentElement; // A második szerelem mező szülő elemének keresése
+        const place_of_error = parent.querySelector('.error'); // Hibajelzés helyének keresése
+        place_of_error.innerHTML = 'A költőnek kötelező megadni a szerelmeit'; // Hibajelzés, ha a második szerelem üres és a checkbox be van pipálva
+        validation = false; // A validáció hamisra állítása
     }
 
-    return validation; // Visszatérés az érvényességgel
+    return validation; // Visszaadja, hogy az űrlap érvényes-e
 }
