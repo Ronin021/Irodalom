@@ -19,70 +19,71 @@ const array = [
 
 // Fejléc objektum, ami a táblázat oszlopainak nevét tárolja
 const fejlecobjekt = {
-    szerzo: 'Szerző neve',
-    korszak: 'Korszak',
-    szerelem: 'Szerelmek',
+    szerzo: 'Szerző neve', // Az első oszlop neve
+    korszak: 'Korszak', // A második oszlop neve
+    szerelem: 'Szerelmek', // A harmadik oszlop neve
 };
 
 // Létrehozzuk a táblázatot
-const table = document.createElement('table');
-document.body.appendChild(table);
+const table = document.createElement('table'); // Új táblázat létrehozása
+document.body.appendChild(table); // A táblázat hozzáadása a body elemhez
 
 // Fejléc sor létrehozása
 const fejlecSor = document.createElement('tr'); // Új sor létrehozása a fejléchez
 table.appendChild(fejlecSor); // Fejléchez tartozó sor hozzáadása a táblázathoz
 
 // Fejléc szövegek iterációval történő beállítása
-for (const fejlecSzoveg of [fejlecobjekt.szerzo, fejlecobjekt.korszak, fejlecobjekt.szerelem]) {
-    const fejlecCella = document.createElement('th'); // Új cella létrehozása a fejléchez
+for (const fejlecSzoveg of [fejlecobjekt.szerzo, fejlecobjekt.korszak, fejlecobjekt.szerelem]) { 
+    // Fejléc szövegek hozzáadása a megfelelő cellákhoz
+    const fejlecCella = document.createElement('th'); // Új fejléc cella létrehozása
     fejlecCella.innerHTML = fejlecSzoveg; // Fejléc szövegének beállítása
     fejlecSor.appendChild(fejlecCella); // Fejléc cella hozzáadása a sorhoz
 }
 
 // Táblázat törzs létrehozása
-const torzs = document.createElement('tbody');
-table.appendChild(torzs);
+const torzs = document.createElement('tbody'); // Új táblázat törzs létrehozása
+table.appendChild(torzs); // Táblázat törzsének hozzáadása a táblázathoz
 
 // Funkció a táblázat törzsének renderelésére
 function Rendertorzs() {
-    torzs.innerHTML = ''; // Törzs kiürítése, hogy ne duplikálódjanak az adatok
+    torzs.innerHTML = ''; // A táblázat törzsének kiürítése a duplikációk elkerülése érdekében
     // Az adatok tömbjén végighaladva létrehozzuk a táblázat sorait
     for (const currentElement of array) {
-        const aktivsor = document.createElement('tr'); // Új sor létrehozása a táblázatban
-        torzs.appendChild(aktivsor);
+        const aktivsor = document.createElement('tr'); // Új sor létrehozása
+        torzs.appendChild(aktivsor); // Az új sort hozzáadjuk a táblázat törzséhez
 
         // Szerző cella létrehozása és hozzáadása
-        const szerzoCella = document.createElement('td');
-        szerzoCella.innerHTML = currentElement.szerzo;
-        aktivsor.appendChild(szerzoCella);
+        const szerzoCella = document.createElement('td'); // Új cella létrehozása a szerzőnek
+        szerzoCella.innerHTML = currentElement.szerzo; // A cellába beírjuk a költő nevét
+        aktivsor.appendChild(szerzoCella); // A cella hozzáadása a sorhoz
 
         // Korszak cella létrehozása és hozzáadása
-        const korszakCella = document.createElement('td');
-        korszakCella.innerHTML = currentElement.korszak;
-        aktivsor.appendChild(korszakCella);
+        const korszakCella = document.createElement('td'); // Új cella létrehozása a korszaknak
+        korszakCella.innerHTML = currentElement.korszak; // A cellába beírjuk a korszakot
+        aktivsor.appendChild(korszakCella); // A cella hozzáadása a sorhoz
 
         // Szerelem cella létrehozása (első szerelem)
-        const szerelemCella = document.createElement('td');
-        szerelemCella.innerHTML = currentElement.szerelem1;
+        const szerelemCella = document.createElement('td'); // Új cella létrehozása az első szerelemnek
+        szerelemCella.innerHTML = currentElement.szerelem1; // A cellába beírjuk az első szerelmet
 
         // Ha nincs második szerelem, a cella szélességét kétszeresre állítjuk
         if (currentElement.szerelem2 === undefined) {
-            szerelemCella.colSpan = 2; // A második szerelem cellája nem jelenik meg
+            szerelemCella.colSpan = 2; // A második szerelem celláját kihagyjuk, ha nincs
         }
-        aktivsor.appendChild(szerelemCella);
+        aktivsor.appendChild(szerelemCella); // A szerelem cella hozzáadása a sorhoz
 
         // Ha van második szerelem, új cellát hozunk létre és hozzáadjuk
         if (currentElement.szerelem2 !== undefined) {
-            const szerelem2Cella = document.createElement('td');
-            szerelem2Cella.innerHTML = currentElement.szerelem2;
-            aktivsor.appendChild(szerelem2Cella);
+            const szerelem2Cella = document.createElement('td'); // Új cella a második szerelemnek
+            szerelem2Cella.innerHTML = currentElement.szerelem2; // A cellába beírjuk a második szerelmet
+            aktivsor.appendChild(szerelem2Cella); // A második szerelem cellájának hozzáadása
         }
     }
 }
 
 // Validációs függvény az űrlap mezőinek ellenőrzésére
 function validateForm() {
-    let validation = true;
+    let validation = true; // A validációs változó alapértelmezett értéke igaz
 
     // Az input mezők értékeinek lekérése
     const szerzoValue = document.getElementById('kolto_nev').value; // Költő neve
@@ -92,35 +93,35 @@ function validateForm() {
     const checkboxChecked = document.getElementById('masodik').checked; // Checkbox értéke, hogy van-e második szerelem
 
     // Hibák törlése előzőleg
-    const errorElement = document.querySelectorAll('.error');
+    const errorElement = document.querySelectorAll('.error'); // Az összes hibaüzenet keresése
     for (const errorok of errorElement) {
-        errorok.innerHTML = '';
+        errorok.innerHTML = ''; // A hibák eltüntetése
     }
 
     // Validációs ellenőrzések az űrlap mezőkön
     if (szerzoValue === '') {
-        const parent = document.getElementById('kolto_nev').parentElement;
-        const place_of_error = parent.querySelector('.error');
+        const parent = document.getElementById('kolto_nev').parentElement; // A költő név mező szülő elemének keresése
+        const place_of_error = parent.querySelector('.error'); // Hibajelzés helyének keresése
         place_of_error.innerHTML = 'A név megadása kötelező'; // Hibajelzés, ha a név üres
-        validation = false;
+        validation = false; // A validáció hamisra állítása
     }
     if (korszakValue === '') {
-        const parent = document.getElementById('korszak').parentElement;
-        const place_of_error = parent.querySelector('.error');
+        const parent = document.getElementById('korszak').parentElement; // A korszak mező szülő elemének keresése
+        const place_of_error = parent.querySelector('.error'); // Hibajelzés helyének keresése
         place_of_error.innerHTML = 'A korszak megadása kötelező'; // Hibajelzés, ha a korszak üres
-        validation = false;
+        validation = false; // A validáció hamisra állítása
     }
     if (szerelem1Value === '') {
-        const parent = document.getElementById('szerelem1').parentElement;
-        const place_of_error = parent.querySelector('.error');
+        const parent = document.getElementById('szerelem1').parentElement; // Az első szerelem mező szülő elemének keresése
+        const place_of_error = parent.querySelector('.error'); // Hibajelzés helyének keresése
         place_of_error.innerHTML = 'Az első szerelem megadása kötelező'; // Hibajelzés, ha az első szerelem üres
-        validation = false;
+        validation = false; // A validáció hamisra állítása
     }
     if (checkboxChecked && szerelem2Value === '') {
-        const parent = document.getElementById('szerelem2').parentElement;
-        const place_of_error = parent.querySelector('.error');
+        const parent = document.getElementById('szerelem2').parentElement; // A második szerelem mező szülő elemének keresése
+        const place_of_error = parent.querySelector('.error'); // Hibajelzés helyének keresése
         place_of_error.innerHTML = 'A költőnek kötelező megadni a szerelmeit'; // Hibajelzés, ha a második szerelem üres és a checkbox be van pipálva
-        validation = false;
+        validation = false; // A validáció hamisra állítása
     }
 
     return validation; // Visszaadja, hogy az űrlap érvényes-e
@@ -154,4 +155,4 @@ document.getElementById('form').addEventListener('submit', function (e) {
 });
 
 // Az első renderelés végrehajtása, amikor a script először betöltődik
-Rendertorzs();
+Rendertorzs(); // Táblázat először történő megjelenítése
