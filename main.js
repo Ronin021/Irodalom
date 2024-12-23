@@ -17,10 +17,6 @@ const array = [
         szerelem1: 'Léda' },
 ];
 
-// Táblázat létrehozása és hozzáadása a dokumentumhoz
-const table = document.createElement('table');
-document.body.appendChild(table);
-
 // Fejléc objektum, ami a táblázat oszlopainak nevét tárolja
 const fejlecobjekt = {
     szerzo: 'Szerző neve',
@@ -28,22 +24,20 @@ const fejlecobjekt = {
     szerelem: 'Szerelmek',
 };
 
-// Fejléc sor létrehozása és hozzáadása a táblázathoz
-const tableHeader = document.createElement('tr');
-table.appendChild(tableHeader);
+// Létrehozzuk a táblázatot
+const table = document.createElement('table');
+document.body.appendChild(table);
 
-// Fejléc cellák létrehozása és hozzáadása
-const headerSzerzo = document.createElement('th');
-headerSzerzo.innerHTML = fejlecobjekt.szerzo; // Szerző neve oszlop
-tableHeader.appendChild(headerSzerzo);
+// Fejléc sor létrehozása
+const fejlecSor = document.createElement('tr'); // Új sor létrehozása a fejléchez
+table.appendChild(fejlecSor); // Fejléchez tartozó sor hozzáadása a táblázathoz
 
-const headerKorszak = document.createElement('th');
-headerKorszak.innerHTML = fejlecobjekt.korszak; // Korszak oszlop
-tableHeader.appendChild(headerKorszak);
-
-const headerSzerelem = document.createElement('th');
-headerSzerelem.innerHTML = fejlecobjekt.szerelem; // Szerelmek oszlop
-tableHeader.appendChild(headerSzerelem);
+// Fejléc szövegek iterációval történő beállítása
+for (const fejlecSzoveg of [fejlecobjekt.szerzo, fejlecobjekt.korszak, fejlecobjekt.szerelem]) {
+    const fejlecCella = document.createElement('th'); // Új cella létrehozása a fejléchez
+    fejlecCella.innerHTML = fejlecSzoveg; // Fejléc szövegének beállítása
+    fejlecSor.appendChild(fejlecCella); // Fejléc cella hozzáadása a sorhoz
+}
 
 // Táblázat törzs létrehozása
 const torzs = document.createElement('tbody');
@@ -70,7 +64,7 @@ function Rendertorzs() {
         // Szerelem cella létrehozása (első szerelem)
         const szerelemCella = document.createElement('td');
         szerelemCella.innerHTML = currentElement.szerelem1;
-        
+
         // Ha nincs második szerelem, a cella szélességét kétszeresre állítjuk
         if (currentElement.szerelem2 === undefined) {
             szerelemCella.colSpan = 2; // A második szerelem cellája nem jelenik meg
