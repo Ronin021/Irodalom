@@ -44,32 +44,53 @@ function createField(id, labelText, type = 'text') {
     return div;
 }
 
+
 /**
  * 
  */
-// Űrlap generálása az általános függvénnyel
-function formGenerate() {
-    const form = document.createElement('form');
-    form.id = 'form'; // Form azonosító beállítása
-
-    // Mezők létrehozása és hozzáadása az űrlaphoz
-    const fields = [
-        createField('kolto_nev', 'Költő neve:'),
-        createField('korszak', 'Korszak:'),
-        createField('szerelem1', 'Szerelmek:'),
-        createField('masodik', 'Volt másik szerelme?', 'checkbox'),
-        createField('szerelem2', 'Második Szerelem neve:'),
+function formGenerate(){
+    // Tömb a form mezőinek meghatározásához
+    const formCellak = [
+        { id: "kolto_nev", label: "Költő neve:", type: "text"}, // Az első mező
+        { id: "korszak", label: "Korszak:", type: "text"}, // A második mező
+        { id: "szerelem1", label: "Szerelme:", type: "text"}, // A harmadik mező
+        { id: "masodik", label: "Volt másik szerelme?", type: "checkbox"}, // A negyedik mező (checkbox)
+        { id: "szerelem2", label: "Második szerelem neve:", type: "text"} // Az ötödik mező
     ];
+    
+    // Új form létrehozása
+    const form = document.createElement('form');
+    form.id = 'form'; // Azonosító beállítása
+    document.body.appendChild(form); // A form hozzáadása a body-hoz
+    
+    // Iterálás az összes form mezőn
+    for(const cella of formCellak){
+        const div = document.createElement('div'); // Div a mezőhöz
+        div.classList.add('field'); // Osztály hozzáadása
 
-    fields.forEach(field => form.appendChild(field)); // Mezők hozzáadása az űrlaphoz
+        const label = document.createElement('label'); // Label létrehozása
+        label.innerText = cella.label; // A label szövege
+        label.htmlFor = cella.id; // A label-hez hozzárendeljük a megfelelő id-t
+        div.appendChild(label); // A label hozzáadása a div-hez
 
-    const gomb = document.createElement('button');
-    gomb.type = 'submit'; // Gomb típusa: küldés
-    gomb.innerText = 'Hozzáadás'; // Gomb felirata
-    form.appendChild(gomb); // Gomb hozzáadása az űrlaphoz
+        const input = document.createElement('input'); // Input mező létrehozása
+        input.type = cella.type; // A mező típusának beállítása (text vagy checkbox)
+        input.id = cella.id; // Az id beállítása
+        div.appendChild(input); // Az input mező hozzáadása a div-hez
 
-    document.body.appendChild(form); // Űrlap hozzáadása az oldalhoz
+        const div_error = document.createElement('div'); // Hibaüzenet div létrehozása
+        div_error.classList = "error"; // Hibaosztály hozzárendelése
+        div.appendChild(div_error); // A hibaüzenet div hozzáadása a mező div-jéhez
+        form.appendChild(div); // Az egész div hozzáadása a formhoz
+    }
+
+    // Submit gomb létrehozása
+    const gombe = document.createElement('button');
+    gombe.type = 'submit'; // Gomb típusának beállítása
+    gombe.innerText = 'Hozzáadás'; // Gomb felirata
+    form.appendChild(gombe); // A gomb hozzáadása a formhoz
 }
+
 
 /**
  * 
