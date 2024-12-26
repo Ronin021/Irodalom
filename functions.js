@@ -63,27 +63,12 @@ function formGenerate(){
     form.id = 'form'; // Azonosító beállítása
     document.body.appendChild(form); // A form hozzáadása a body-hoz
     
-    // Iterálás az összes form mezőn
-    for(const cella of formCellak){
-        const div = document.createElement('div'); // Div a mezőhöz
-        div.classList.add('field'); // Osztály hozzáadása
-
-        const label = document.createElement('label'); // Label létrehozása
-        label.innerText = cella.label; // A label szövege
-        label.htmlFor = cella.id; // A label-hez hozzárendeljük a megfelelő id-t
-        div.appendChild(label); // A label hozzáadása a div-hez
-
-        const input = document.createElement('input'); // Input mező létrehozása
-        input.type = cella.type; // A mező típusának beállítása (text vagy checkbox)
-        input.id = cella.id; // Az id beállítása
-        div.appendChild(input); // Az input mező hozzáadása a div-hez
-
-        const div_error = document.createElement('div'); // Hibaüzenet div létrehozása
-        div_error.classList = "error"; // Hibaosztály hozzárendelése
-        div.appendChild(div_error); // A hibaüzenet div hozzáadása a mező div-jéhez
-        form.appendChild(div); // Az egész div hozzáadása a formhoz
-    }
-
+   // Iteráció a formCellak tömb elemein
+   for (const cella of formCellak) {
+    // Mező létrehozása a createField függvény segítségével
+    const fieldDiv = createField(cella.id, cella.label, cella.type);
+    form.appendChild(fieldDiv); // A létrehozott mező hozzáadása a formhoz
+}
     // Submit gomb létrehozása
     const gombe = document.createElement('button');
     gombe.type = 'submit'; // Gomb típusának beállítása
