@@ -1,10 +1,4 @@
-// Adatok tömbje, amely tartalmazza a költők adatait (szerző, korszak, szerelmek)
-const array = [
-    { szerzo: 'Balassi Bálint', korszak: 'reformáció', szerelem1: 'Losonczy Anna', szerelem2: 'Dobó Krisztina' },
-    { szerzo: 'Csokonai Vitéz Mihály', korszak: 'felvilágosodás', szerelem1: 'Vajda Juliána' },
-    { szerzo: 'Petőfi Sándor', korszak: 'magyar romantika', szerelem1: 'Mednyánszky Berta', szerelem2: 'Szendrey Júlia' },
-    { szerzo: 'Ady Endre', korszak: '20. század', szerelem1: 'Léda' },
-];
+
 
 // Fejléc objektum, ami a táblázat oszlopainak nevét tárolja
 const fejlecobjekt = {

@@ -1,4 +1,10 @@
-
+// Adatok tömbje, amely tartalmazza a költők adatait (szerző, korszak, szerelmek)
+const array = [
+    { szerzo: 'Balassi Bálint', korszak: 'reformáció', szerelem1: 'Losonczy Anna', szerelem2: 'Dobó Krisztina' },
+    { szerzo: 'Csokonai Vitéz Mihály', korszak: 'felvilágosodás', szerelem1: 'Vajda Juliána' },
+    { szerzo: 'Petőfi Sándor', korszak: 'magyar romantika', szerelem1: 'Mednyánszky Berta', szerelem2: 'Szendrey Júlia' },
+    { szerzo: 'Ady Endre', korszak: '20. század', szerelem1: 'Léda' },
+];
 
 // Létrehozzuk a táblázatot
 const table = document.createElement('table');
@@ -9,11 +15,13 @@ const fejlecSor = document.createElement('tr');
 table.appendChild(fejlecSor); // Fejléc sor hozzáadása a táblázathoz
 
 // Fejléc szövegek iterációval történő beállítása
-for (const fejlecSzoveg of [fejlecobjekt.szerzo, fejlecobjekt.korszak, fejlecobjekt.szerelem]) {
+for (var key in fejlecobjekt) {
+    var fejlecSzoveg = fejlecobjekt[key]; // Objektum adott kulcsának értéke
     const fejlecCella = document.createElement('th');
     fejlecCella.innerHTML = fejlecSzoveg; // Fejléc szövegének beállítása
     fejlecSor.appendChild(fejlecCella); // Fejléc cella hozzáadása a sorhoz
 }
+
 
 // Táblázat törzs létrehozása
 const torzs = document.createElement('tbody');
